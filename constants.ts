@@ -1,16 +1,5 @@
 // FIX: Import the `BuildingName` type to fix reference errors caused by a circular dependency between `types.ts` and `constants.ts`.
 import type { Building, DirectoryRow, FloorPlanLabel, BuildingName } from './types';
-import building1Image from '@assets/1호관.jpg';
-import building2Image from '@assets/2호관.jpg';
-import building3Image from '@assets/3호관.jpg';
-import building4Image from '@assets/4호관.jpg';
-import building5Image from '@assets/5호관.jpg';
-import building6Image from '@assets/6호관.jpg';
-import building7Image from '@assets/7호관.jpg';
-import building8Image from '@assets/8호관.jpg';
-import building9Image from '@assets/9호관.jpg';
-import building10Image from '@assets/10호관.jpg';
-import building11Image from '@assets/11호관.jpg';
 
 export const BUILDING_NAMES = ['1호관', '2호관', '3호관', '4호관', '5호관', '6호관', '7호관', '8호관', '9호관', '10호관', '11호관'] as const;
 
@@ -36,6 +25,7 @@ const generateDirectory = (levels: string[]): DirectoryRow[] => {
     }));
 };
 
+  
 // Defines the floor structure for each building
 const buildingFloors: Record<string, string[]> = {
     '1호관': ['1F', '2F', '3F', '4F', '5F', '옥상'],
@@ -51,20 +41,22 @@ const buildingFloors: Record<string, string[]> = {
     '11호관': ['B2F', 'B1F', '1F', '2F', '3F', '4F', '5F', '옥상'],
 };
 
-// Defines the main image for each building
-const buildingImages: Record<string, string> = {
-    '1호관': building1Image,
-    '2호관': building2Image,
-    '3호관': building3Image,
-    '4호관': building4Image,
-    '5호관': building5Image,
-    '6호관': building6Image,
-    '7호관': building7Image,
-    '8호관': building8Image,
-    '9호관': building9Image,
-    '10호관': building10Image,
-    '11호관': building11Image,
-};
+// constants.ts
+export const buildingImages: Record<string, string> = {
+    '1호관': '/assets/1호관.jpg',
+    '2호관': '/assets/2호관.jpg',
+    '3호관': '/assets/3호관.jpg',
+    '4호관': '/assets/4호관.jpg',
+    '5호관': '/assets/5호관.jpg',
+    '6호관': '/assets/6호관.jpg',
+    '7호관': '/assets/7호관.jpg',
+    '8호관': '/assets/8호관.jpg',
+    '9호관': '/assets/9호관.jpg',
+    '10호관': '/assets/10호관.jpg',
+    '11호관': '/assets/11호관.jpg',
+  };
+  // 모든 `import buildingXImage from 'public/...';` 줄은 삭제
+  
 
 // Generate the final data for all buildings
 export const BUILDING_DATA: Building[] = BUILDING_NAMES.map((name, index) => {
