@@ -1,5 +1,16 @@
 // FIX: Import the `BuildingName` type to fix reference errors caused by a circular dependency between `types.ts` and `constants.ts`.
 import type { Building, DirectoryRow, FloorPlanLabel, BuildingName } from './types';
+import building1Image from '@assets/1호관.jpg';
+import building2Image from '@assets/2호관.jpg';
+import building3Image from '@assets/3호관.jpg';
+import building4Image from '@assets/4호관.jpg';
+import building5Image from '@assets/5호관.jpg';
+import building6Image from '@assets/6호관.jpg';
+import building7Image from '@assets/7호관.jpg';
+import building8Image from '@assets/8호관.jpg';
+import building9Image from '@assets/9호관.jpg';
+import building10Image from '@assets/10호관.jpg';
+import building11Image from '@assets/11호관.jpg';
 
 export const BUILDING_NAMES = ['1호관', '2호관', '3호관', '4호관', '5호관', '6호관', '7호관', '8호관', '9호관', '10호관', '11호관'] as const;
 
@@ -42,17 +53,17 @@ const buildingFloors: Record<string, string[]> = {
 
 // Defines the main image for each building
 const buildingImages: Record<string, string> = {
-    '1호관': 'https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1200&auto=format&fit=crop',
-    '2호관': 'https://images.unsplash.com/photo-1582215894002-a035272267b5?q=80&w=1200&auto=format&fit=crop',
-    '3호관': 'https://images.unsplash.com/photo-1607237138185-e894ee31b2af?q=80&w=1200&auto=format&fit=crop',
-    '4호관': 'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?q=80&w=1200&auto=format&fit=crop',
-    '5호관': 'https://images.unsplash.com/photo-1554462123-99333b28b49e?q=80&w=1200&auto=format&fit=crop',
-    '6호관': 'https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?q=80&w=1200&auto=format&fit=crop',
-    '7호관': 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format&fit=crop',
-    '8호관': 'https://images.unsplash.com/photo-1600106963243-52417741d48c?q=80&w=1200&auto=format&fit=crop',
-    '9호관': 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1200&auto=format&fit=crop',
-    '10호관': 'https://images.unsplash.com/photo-1621293954908-564195a62d94?q=80&w=1200&auto=format&fit=crop',
-    '11호관': 'https://images.unsplash.com/photo-1567423696129-a1d4b2a47d0e?q=80&w=1200&auto=format&fit=crop',
+    '1호관': building1Image,
+    '2호관': building2Image,
+    '3호관': building3Image,
+    '4호관': building4Image,
+    '5호관': building5Image,
+    '6호관': building6Image,
+    '7호관': building7Image,
+    '8호관': building8Image,
+    '9호관': building9Image,
+    '10호관': building10Image,
+    '11호관': building11Image,
 };
 
 // Generate the final data for all buildings
