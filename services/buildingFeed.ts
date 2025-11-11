@@ -6,12 +6,14 @@ export interface BuildingFeedResponse {
   buildingId?: number;
   buildingName?: string;
   touchedAt?: string;
+  sensorCode?: number;
   [key: string]: unknown;
 }
 
 export interface BuildingFeedResult {
   buildingName: BuildingName | null;
   touchedAt?: string;
+  sensorCode?: number;
   raw: BuildingFeedResponse;
 }
 
@@ -23,6 +25,14 @@ const getBuildingById = (id?: number): BuildingName | null => {
   if (typeof id !== 'number') return null;
   const index = id - 1;
   return BUILDING_NAMES[index] ?? null;
+};
+
+const getBuildingFromSensorCode = (code?: number): BuildingName | null => {
+  if (typeof code !== 'number') {
+    return null;
+  }
+  const normalizedIndex = code === 0 ? 0 : code - 1;
+  return BUILDING_NAMES[normalizedIndex] ?? null;
 };
 
 export const fetchCurrentBuilding = async (
@@ -48,11 +58,13 @@ export const fetchCurrentBuilding = async (
   const buildingName =
     (isBuildingName(data.buildingName) && data.buildingName) ||
     getBuildingById(data.buildingId) ||
+    getBuildingFromSensorCode(data.sensorCode) ||
     null;
 
   return {
     buildingName,
     touchedAt: data.touchedAt,
+    sensorCode: data.sensorCode,
     raw: data,
   };
 };

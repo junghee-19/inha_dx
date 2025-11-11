@@ -1,5 +1,5 @@
 // ws-server.mjs
-const DEFAULT_WS_URL = 'ws://localhost:8080';
+const DEFAULT_WS_URL = 'ws://localhost:6060';
 let socketRef = null;
 
 const resolveWsUrl = () => {
