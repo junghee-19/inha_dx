@@ -40,6 +40,18 @@ const BuildingInfo: React.FC<BuildingInfoProps> = ({ building }) => {
     );
   }, [building.floorPlanLabels, selectedFloorPlanLevel]);
 
+  const filteredDirectoryByLevel = useMemo(() => {
+    if (!selectedFloorPlanLevel) return directoryByLevel;
+    return directoryByLevel.filter(([level]) => level === selectedFloorPlanLevel);
+  }, [directoryByLevel, selectedFloorPlanLevel]);
+
+  const shouldFilterDirectory =
+    selectedFloorPlanLevel !== '' && filteredDirectoryByLevel.length > 0;
+
+  const directoryToRender = shouldFilterDirectory ? filteredDirectoryByLevel : directoryByLevel;
+  const showMissingDirectoryNotice =
+    selectedFloorPlanLevel !== '' && filteredDirectoryByLevel.length === 0;
+
   return (
     <section className="w-full mt-10 animate-fade-in">
       <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 mb-8 tracking-tight">
@@ -78,7 +90,7 @@ const BuildingInfo: React.FC<BuildingInfoProps> = ({ building }) => {
                 <img
                   src={currentFloorPlanImage}
                   alt={`${building.name} ${selectedFloorPlanLevel} floor plan`}
-                  className="w-full h-auto object-contain"
+                  className="w-auto max-w-full max-h-[70vh] h-auto object-contain mx-auto"
                   loading="lazy"
                 />
               ) : (
@@ -90,7 +102,12 @@ const BuildingInfo: React.FC<BuildingInfoProps> = ({ building }) => {
           </div>
 
           <div className="border border-gray-200 rounded-3xl divide-y divide-gray-200 bg-white">
-            {directoryByLevel.map(([level, rooms]) => {
+            {showMissingDirectoryNotice && (
+              <div className="px-5 py-6 text-sm text-center text-gray-500">
+                선택한 층의 시설 정보가 없습니다.
+              </div>
+            )}
+            {directoryToRender.map(([level, rooms]) => {
               const roomNames = rooms.map(room => room.name).join(' · ');
               return (
                 <div
