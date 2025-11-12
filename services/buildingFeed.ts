@@ -21,17 +21,33 @@ const isBuildingName = (value: unknown): value is BuildingName =>
   typeof value === 'string' &&
   BUILDING_NAMES.includes(value as BuildingName);
 
-const getBuildingById = (id?: number): BuildingName | null => {
-  if (typeof id !== 'number') return null;
-  const index = id - 1;
+const parseNumeric = (value?: unknown): number | null => {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    const match = trimmed.match(/-?\d+/);
+    if (!match) return null;
+    const parsed = Number(match[0]);
+    return Number.isNaN(parsed) ? null : parsed;
+  }
+  return null;
+};
+
+const getBuildingById = (id?: unknown): BuildingName | null => {
+  const numeric = parseNumeric(id);
+  if (numeric == null) return null;
+  const index = numeric <= 0 ? 0 : numeric;
   return BUILDING_NAMES[index] ?? null;
 };
 
-const getBuildingFromSensorCode = (code?: number): BuildingName | null => {
-  if (typeof code !== 'number') {
-    return null;
-  }
-  const normalizedIndex = code === 0 ? 0 : code - 1;
+const getBuildingFromSensorCode = (code?: unknown): BuildingName | null => {
+  const numeric = parseNumeric(code);
+  if (numeric == null) return null;
+  if (numeric <= 0) return BUILDING_NAMES[0];
+  const normalizedIndex = numeric - 1;
   return BUILDING_NAMES[normalizedIndex] ?? null;
 };
 
@@ -42,7 +58,7 @@ export const fetchCurrentBuilding = async (
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-    },
+    }, 
     signal,
   });
 

@@ -13,6 +13,36 @@ const defaultState = {
 
 const latestReading = { ...defaultState };
 
+const parseSensorCode = (value) => {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const match = value.match(/\d+/);
+    if (match) {
+      const parsed = Number(match[0]);
+      if (!Number.isNaN(parsed)) {
+        return parsed;
+      }
+    }
+  }
+  return NaN;
+};
+
+const SENSOR_OVERRIDES = {
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 1,
+  6: 5,
+  7: 10,
+  8: 11,
+  9: 7,
+  10: 6,
+  11: 7,
+};
+
 const mapSensorCodeToBuildingId = (code) => {
   if (typeof code !== 'number' || Number.isNaN(code)) {
     return null;
@@ -20,9 +50,14 @@ const mapSensorCodeToBuildingId = (code) => {
   if (code < SENSOR_MIN || code > SENSOR_MAX) {
     return null;
   }
-  if (code === 0) {
-    return 1;
-  }
+  // if (code === 0) {
+  //   return 1;
+  // }
+
+  // if (SENSOR_OVERRIDES[code]) {
+  //   return SENSOR_OVERRIDES[code];
+  // }
+
   const capped = Math.min(code, BUILDING_COUNT);
   return capped;
 };
@@ -97,7 +132,7 @@ const createSocketServer = () => {
     ws.on('message', (data, isBinary) => {
       const payload = isBinary ? data.toString('utf8') : data.toString();
       console.log(`[ws] message from ${remote}:`, payload);
-      const numeric = Number(payload);
+      const numeric = parseSensorCode(payload);
 
       if (!updateLatestReading(numeric)) {
         console.warn(`[ws] ignored invalid sensor value: ${payload}`);
