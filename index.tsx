@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { initSocket } from './websocket/websocket.mjs';
+import './index.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

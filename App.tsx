@@ -6,7 +6,7 @@ import { BUILDING_DATA, BUILDING_NAMES } from './constants';
 import type { BuildingName } from './types';
 import { SparkleIcon } from './components/Icons';
 import { fetchCurrentBuilding } from './services/buildingFeed';
-
+import './index.css';
 type SensorStatus = 'idle' | 'syncing' | 'live' | 'waiting' | 'error';
 const POLL_INTERVAL_MS = 3000;
 
